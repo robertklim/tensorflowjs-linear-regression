@@ -51,4 +51,18 @@ function draw() {
         // draw a point
         point(px, py);
     }
+
+    // draw the line
+    const xvals = [0, 1];
+    const yvals = predict(xvals);
+    //yvals.print();
+    let x1 = map(xvals[0], 0, 1, 0, width);
+    let x2 = map(xvals[1], 0, 1, 0, width);
+    
+    let lineY = yvals.dataSync();
+    let y1 = map(lineY[0], 0, 1, height, 0);
+    let y2 = map(lineY[1], 0, 1, height, 0);
+    
+    line(x1, y1, x2, y2);
+
 }
