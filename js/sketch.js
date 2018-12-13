@@ -1,8 +1,28 @@
 let xs = [];
 let ys = [];
 
+let m, b;
+
+const learningRate = 0.01;
+const optimizer = tf.train.sgd(learningRate);
+
 function setup() {
     createCanvas(400, 400);
+
+    m = tf.variable(tf.scalar(random(1)));
+    b = tf.variable(tf.scalar(random(1)));
+
+}
+
+function loss(pred, labels) {
+    return pred.sub(labels).square().mean();
+}
+
+function predict(xs) {
+    const tfxs = tf.tensor1d(xs);
+    // y = mx + b
+    const ys = tfxs.mul(m).add(b);
+    return ys;
 }
 
 function mousePressed() {
@@ -18,6 +38,12 @@ function draw() {
     background(255);
     stroke(0);
     strokeWeight(6);
+
+    if (xs.length > 0) {
+        const tfys = tf.tensor1d(ys);
+        optimizer.minimize(() => loss(predict(xs), tfys));
+    }
+
     for (let i = 0; i < xs.length; i++) {
         // reverse normalization (values between 0 - height and 0 - width)
         let px = map(xs[i], 0, 1, 0, width);
