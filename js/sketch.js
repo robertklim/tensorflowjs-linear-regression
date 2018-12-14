@@ -70,6 +70,6 @@ function draw() {
     strokeWeight(2);
     line(x1, y1, x2, y2);
 
-    console.log(tf.memory().numTensors);
+    // console.log(tf.memory().numTensors);
 
 }
